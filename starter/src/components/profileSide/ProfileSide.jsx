@@ -1,16 +1,15 @@
-import React from 'react'
+import React from 'react' 
 import LogoSearch from '../LogoSearch/LogoSearch'
 import ProfileCard from '../ProfileCard/ProfileCard'
 
-const profileSide = () => {
+import "./ProfileSide.css"
+const ProfileSide = () => {
   return (
-    <div>
-      <div className="ProfileSide">
+    <div className="ProfileSide">
         <LogoSearch/>
-        <ProfileCard/>
-      </div>
+        <ProfileCard/> 
     </div>
   )
 }
 
-export default profileSide
+export default ProfileSide
