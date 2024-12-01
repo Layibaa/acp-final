@@ -1,31 +1,39 @@
-import React from 'react';
-import './FollowersCard.css';
-import Followers from '../../Data/FollowersData'; 
+import React, { useEffect, useState } from "react";
+import "./FollowersCard.css";
+import FollowersModal from "../FollowersModal/FollowersModal";
+import { getAllUser } from "../../api/UserRequests";
+import User from "../User/User";
+import { useSelector } from "react-redux";
+const FollowersCard = ({ location }) => {
+  const [modalOpened, setModalOpened] = useState(false);
+  const [persons, setPersons] = useState([]);
+  const { user } = useSelector((state) => state.authReducer.authData);
 
-const defaultFollowers = [
-  { name: "John Doe", username: "johndoe", img: "https://via.placeholder.com/150" },
-  { name: "Jane Smith", username: "janesmith", img: "https://via.placeholder.com/150" },
-];
-
-const FollowersCard = () => {
-  const followersData = Array.isArray(Followers) && Followers.length > 0 ? Followers : defaultFollowers;
+  useEffect(() => {
+    const fetchPersons = async () => {
+      const { data } = await getAllUser();
+      setPersons(data);
+    };
+    fetchPersons();
+  }, []);
 
   return (
     <div className="FollowersCard">
-      <h3>Who is following you</h3>
+      <h3>People you may know</h3>
 
-      {followersData.map((follower, id) => (
-        <div className="follower" key={id}>
-          <div>
-            <img src={follower.img} alt={follower.name} className='followerImage' />
-            <div className="name">
-              <span>{follower.name}</span>
-              <span>@{follower.username}</span>
-            </div>
-          </div>
-          <button className='button fc-button'>Follow</button>
-        </div>
-      ))}
+      {persons.map((person, id) => {
+        if (person._id !== user._id) return <User person={person} key={id} />;
+      })}
+      {!location ? (
+        <span onClick={() => setModalOpened(true)}>Show more</span>
+      ) : (
+        ""
+      )}
+
+      <FollowersModal
+        modalOpened={modalOpened}
+        setModalOpened={setModalOpened}
+      />
     </div>
   );
 };
