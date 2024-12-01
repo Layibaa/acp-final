@@ -19,6 +19,7 @@ export const followUser = (id, data)=> async(dispatch)=> {
     UserApi.followUser(id, data)
 }
 
+export const unfollowUser = (id, data)=> async(dispatch)=> {
     dispatch({type: "UNFOLLOW_USER", data: id})
     UserApi.unfollowUser(id, data)
 }
