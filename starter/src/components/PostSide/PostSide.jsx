@@ -1,5 +1,5 @@
 import React from 'react'
-import Posts from '../Posts/Posts'
+import Posts from '../Post/Post'
 import PostShare from '../PostShare/PostShare'
 import './PostSide.css'
 const PostSide = () => {
